@@ -1,0 +1,31 @@
+= Fast Snippet
+
+Fast Snippet provides a replacement to <r:snippet/> that speeds up multiple calls to the same snippet in a single page by caching the results of Snippet.find_by_name in an instance variable of the rendering page.
+
+There's really only one situation where this helps: when a page calls the same snippet multiple times using the <r:snippet/> tag.  According to my benchmarks, substantial gains are only apparent after 20 or so calls.  However by about 50, we start seeing orders of magnitude difference in speed.
+
+== Install
+
+Place it in vendor/extensions and that's it.  This is a drop in replacement, so no extra work is required.
+
+== Why?
+
+So why would you need to call a snippet that many times?  Some places like to have copyrights under every image.  Copyrights can be kept in a Snippet.  If you have tens of images in a page, the slow-down becomes quite noticeable.
+
+This is also very useful when combined with extensions that use snippets as configurable parts of their code.
+
+== Why not?
+
+Well, it's not always necessary.  Most users of Radiant more than likely only use a particular snippet once or twice.  It's about 30 LoC extra, so it's up to you to decide if that's too much for something you may not need.
+
+== See for yourself
+
+There's a benchmark script in benchmark/fast_snippet_benchmark.rb
+
+== Hey!  You didn't write any specs!
+
+Uhh, yeah.  Here's the thing though: we're just changing the implementation of the standard interface.  Run rake spec if it makes you feel better. ;)
+
+== Credit
+
+Andrew O'Brien <obrien.andrew@gmail.com>
